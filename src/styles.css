@@ -1,1 +1,191 @@
 @import 'tailwindcss';
+
+@font-face {
+  font-family: 'Sinistre';
+  src: url('/fonts/SinistreVF.woff2') format('woff2');
+  font-weight: 400 900;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Terminal Grotesque';
+  src: url('/fonts/TerminalGrotesque.woff2') format('woff2');
+  font-display: swap;
+}
+@font-face {
+  font-family: 'CommitMonoManzanita';
+  src: url('/fonts/CommitMonoManzanita-400.woff2') format('woff2');
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'CommitMonoManzanita';
+  src: url('/fonts/CommitMonoManzanita-600.woff2') format('woff2');
+  font-weight: 600;
+  font-display: swap;
+}
+
+@theme {
+  --font-display: 'Sinistre', 'Iowan Old Style', Georgia, serif;
+  --font-pixel: 'Terminal Grotesque', 'Silkscreen', ui-monospace, monospace;
+  --font-mono:
+    'CommitMonoManzanita', 'Commit Mono', ui-monospace, Menlo, monospace;
+
+  --color-ground: #19161d;
+  --color-plum: #2b2532;
+  --color-pearl: #eae8ee;
+  --color-ink: #fff3ff;
+  --color-rose: #ffd2f1;
+  --color-pink: #ff78e1;
+  --color-violet: #c478ff;
+  --color-aqua: #78b6ff;
+  --color-orange: #ff650a;
+  --color-gold: #ffe35b;
+  --color-rule: #ffe5ff2e;
+}
+
+html,
+body {
+  background: radial-gradient(
+    ellipse at 48% 42% in oklch,
+    #44304f 0%,
+    #2b2532 47%,
+    #19161d 100%
+  );
+  color: var(--color-pearl);
+  overscroll-behavior: none;
+}
+
+::selection {
+  background: #f4c5ff;
+  color: #482553;
+}
+
+.scrollbar-thin {
+  scrollbar-width: thin;
+  scrollbar-color: #c478ff55 transparent;
+}
+
+/* The sky: a WebGPU canvas with an HTML label layer riding above it. */
+
+.galaxy-host {
+  touch-action: none;
+}
+
+.galaxy-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.galaxy-labels {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.galaxy-label {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: flex;
+  align-items: baseline;
+  gap: 5px;
+  height: 18px;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 260ms ease;
+  font-family: var(--font-pixel);
+  font-size: 15px;
+  line-height: 18px;
+  color: #f1e6f8;
+  text-shadow:
+    0 0 6px #19161d,
+    0 0 14px #19161dcc,
+    0 0 2px #19161d;
+  will-change: transform, opacity;
+}
+
+.galaxy-label.is-shown {
+  opacity: 0.86;
+}
+
+.galaxy-label[data-magnitude='1'] {
+  font-size: 17px;
+  color: #fff3ff;
+}
+
+.galaxy-label[data-kind='Field'] {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #ffd2f1;
+}
+
+.galaxy-label[data-kind='Theory'] {
+  font-style: italic;
+  color: #e4defa;
+}
+
+.galaxy-label[data-emphasis='Lit'].is-shown {
+  opacity: 1;
+}
+
+.galaxy-label[data-emphasis='Focus'].is-shown {
+  opacity: 1;
+  color: #ffffff;
+  font-size: 20px;
+  text-shadow:
+    0 0 12px #ff78e1aa,
+    0 0 6px #19161d,
+    0 0 2px #19161d;
+}
+
+.galaxy-label[data-kind='Field'][data-emphasis='Focus'].is-shown {
+  font-size: 13px;
+  color: #ffd2f1;
+}
+
+.galaxy-label-year {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.04em;
+  color: #eae8ee80;
+}
+
+.galaxy-constellation {
+  position: absolute;
+  left: 0;
+  top: 0;
+  white-space: nowrap;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--tone);
+  text-shadow: 0 0 10px #19161d;
+  transition: opacity 400ms ease;
+}
+
+.galaxy-ring-year {
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.08em;
+  color: #eae8ee66;
+  text-shadow: 0 0 6px #19161d;
+  transition: opacity 400ms ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .galaxy-label,
+  .galaxy-constellation,
+  .galaxy-ring-year {
+    transition: none;
+  }
+}
