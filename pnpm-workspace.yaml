@@ -1,0 +1,9 @@
+allowBuilds:
+  msgpackr-extract: false
+minimumReleaseAgeExclude:
+  - '@foldkit/devtools-mcp@0.24.1'
+  - '@foldkit/devtools@0.166.0'
+  - '@foldkit/oxlint-plugin@0.15.2'
+  - '@foldkit/ui@0.166.0'
+  - '@foldkit/vite-plugin@0.26.1'
+  - foldkit@0.166.0
