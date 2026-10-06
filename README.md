@@ -23,11 +23,11 @@ CLOUDFLARE_API_TOKEN=... # "Edit Cloudflare Workers" template + Account › Secr
 Then run:
 
 ```bash
-pnpm deploy   # builds with Vite and deploys the `prod` stage
-pnpm destroy  # tears it down
+pnpm run deploy   # builds with Vite and deploys the `prod` stage
+pnpm run destroy  # tears it down
 ```
 
-The first deploy to an account also creates Alchemy's state store (an `alchemy-state-store` Worker).
+It serves at https://language-galaxy.jem.computer (the `jem.computer` zone must be in the same Cloudflare account). The first deploy to an account also creates Alchemy's state store (an `alchemy-state-store` Worker).
 
 ## Learn More
 

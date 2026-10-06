@@ -2,7 +2,9 @@ import * as Alchemy from 'alchemy'
 import * as Cloudflare from 'alchemy/Cloudflare'
 import * as Effect from 'effect/Effect'
 
-export const Website = Cloudflare.Website.Foldkit('Website')
+export const Website = Cloudflare.Website.Foldkit('Website', {
+  domain: 'language-galaxy.jem.computer',
+})
 
 export default Alchemy.Stack(
   'LanguageGalaxy',
