@@ -8,4 +8,9 @@ export default defineConfig({
   optimizeDeps: {
     entries: ['src/entry.ts'],
   },
+  server: {
+    port: 5188,
+    allowedHosts: ['.getbb.app'],
+    watch: { usePolling: true, interval: 300 },
+  },
 })
