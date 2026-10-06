@@ -1,5 +1,6 @@
 # Dependencies
 node_modules/
+.pnpm-store/
 
 # Build outputs
 dist/
@@ -26,3 +27,6 @@ Thumbs.db
 
 # Claude Code worktrees
 .claude/worktrees/
+
+# Alchemy
+.alchemy/

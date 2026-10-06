@@ -1,5 +1,7 @@
 allowBuilds:
+  esbuild: false
   msgpackr-extract: false
+  workerd: false
 minimumReleaseAgeExclude:
   - '@foldkit/devtools-mcp@0.24.1'
   - '@foldkit/devtools@0.166.0'
@@ -7,3 +9,8 @@ minimumReleaseAgeExclude:
   - '@foldkit/ui@0.166.0'
   - '@foldkit/vite-plugin@0.26.1'
   - foldkit@0.166.0
+  - '@alchemy.run/cloudflare-runtime@2.0.0-beta.81'
+  - '@alchemy.run/floci@2.0.0-beta.81'
+  - '@alchemy.run/frontend-frameworks@2.0.0-beta.81'
+  - '@alchemy.run/node-utils@2.0.0-beta.81'
+  - alchemy@2.0.0-beta.81
