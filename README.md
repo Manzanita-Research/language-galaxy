@@ -27,12 +27,13 @@ The site is one Cloudflare Worker, built by [Alchemy](https://alchemy.run/cloudf
 - Every push to `main` deploys the `prod` stage to https://language-galaxy.jem.computer, once format, lint, typecheck and tests pass.
 - Every pull request deploys a `pr-<number>` stage. Rather than create a Worker of its own, it uploads a version of the production Worker, served at `https://pr-<number>-<worker>.<account>.workers.dev` without taking production traffic. The PR's "View deployment" button links there. Each push re-points the URL, and closing the PR releases it.
 
-The workflow reads two repository secrets, `CLOUDFLARE_ACCOUNT_ID` and `CLOUDFLARE_API_TOKEN`. The token is the "Edit Cloudflare Workers" template plus Account › Secrets Store › Edit, which Alchemy uses to reach its state store.
+The workflow reads `CLOUDFLARE_ACCOUNT_ID` and `CLOUDFLARE_API_TOKEN` from the manzanita-research organization secrets. On GitHub's Free plan, organization secrets only reach public repositories. The token is the "Edit Cloudflare Workers" template plus Account › Secrets Store › Edit, which Alchemy uses to reach its state store.
 
 To deploy by hand, put the same two variables in `.env` (gitignored), or run `pnpm alchemy profile edit` to log in with OAuth. Then run:
 
 ```sh
 pnpm run deploy   # builds with Vite and deploys the `prod` stage
+pnpm build && pnpm exec alchemy deploy --stage pr-123   # a preview version
 pnpm run destroy  # tears it down
 ```
 
