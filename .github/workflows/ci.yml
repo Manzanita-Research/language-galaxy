@@ -73,6 +73,7 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - uses: ./.github/actions/setup
+      - run: pnpm build
       - id: deploy
         run: |
           pnpm exec alchemy deploy --stage "$STAGE" --yes --no-input 2>&1 | tee deploy.log

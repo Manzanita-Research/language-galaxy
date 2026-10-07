@@ -11,14 +11,21 @@ const DOMAIN = 'language-galaxy.jem.computer'
 /** Every other stage (CI uses `pr-<number>`) uploads a version of the
  *  production Worker instead of creating a Worker of its own. Live traffic
  *  stays on production; the version is served at a stable preview URL,
- *  `<stage>-<worker>.<account>.workers.dev`, that each push re-points. */
+ *  `<stage>-<worker>.<account>.workers.dev`, that each push re-points.
+ *
+ *  A version can't drive the Vite build the way `Website.Foldkit` does, so
+ *  it uploads the `dist/` that `pnpm build` leaves behind: build first. */
 const previewOfProduction = (stage: string) =>
   Effect.gen(function* () {
     const production = yield* Cloudflare.Worker.ref('Website', {
       stage: PRODUCTION_STAGE,
     })
     const maybeCommit = yield* Config.option(Config.String('GITHUB_SHA'))
-    return yield* Cloudflare.Website.Foldkit('Website', {
+    return yield* Cloudflare.Worker('Website', {
+      assets: {
+        directory: 'dist',
+        notFoundHandling: 'single-page-application',
+      },
       version: {
         parent: production,
         alias: stage,
