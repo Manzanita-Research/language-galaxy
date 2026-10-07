@@ -19,3 +19,16 @@ A browser with WebGPU is needed for the sky. Without it, the guide and panels st
 - `src/view/` holds the panels.
 
 See `AGENTS.md` for the architecture notes.
+
+## Deploying
+
+Every push to `main` deploys to https://language-galaxy.jem.computer, once format, lint, typecheck and tests pass (`.github/workflows/ci.yml`). The site is a Cloudflare Worker built by [Alchemy](https://alchemy.run/cloudflare/frontend/foldkit/), and the stack lives in [`alchemy.run.ts`](./alchemy.run.ts). The workflow reads two repository secrets, `CLOUDFLARE_ACCOUNT_ID` and `CLOUDFLARE_API_TOKEN`. The token is the "Edit Cloudflare Workers" template plus Account › Secrets Store › Edit, which Alchemy uses to reach its state store.
+
+To deploy by hand, put the same two variables in `.env` (gitignored), or run `pnpm alchemy profile edit` to log in with OAuth. Then run:
+
+```sh
+pnpm run deploy   # builds with Vite and deploys the `prod` stage
+pnpm run destroy  # tears it down
+```
+
+Use `pnpm run deploy`, not `pnpm deploy`, which is a different built-in pnpm command.
