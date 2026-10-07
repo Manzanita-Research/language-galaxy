@@ -22,7 +22,12 @@ See `AGENTS.md` for the architecture notes.
 
 ## Deploying
 
-Every push to `main` deploys to https://language-galaxy.jem.computer, once format, lint, typecheck and tests pass (`.github/workflows/ci.yml`). The site is a Cloudflare Worker built by [Alchemy](https://alchemy.run/cloudflare/frontend/foldkit/), and the stack lives in [`alchemy.run.ts`](./alchemy.run.ts). The workflow reads two repository secrets, `CLOUDFLARE_ACCOUNT_ID` and `CLOUDFLARE_API_TOKEN`. The token is the "Edit Cloudflare Workers" template plus Account › Secrets Store › Edit, which Alchemy uses to reach its state store.
+The site is one Cloudflare Worker, built by [Alchemy](https://alchemy.run/cloudflare/frontend/foldkit/) from [`alchemy.run.ts`](./alchemy.run.ts) and deployed by `.github/workflows/ci.yml`:
+
+- Every push to `main` deploys the `prod` stage to https://language-galaxy.jem.computer, once format, lint, typecheck and tests pass.
+- Every pull request deploys a `pr-<number>` stage. Rather than create a Worker of its own, it uploads a version of the production Worker, served at `https://pr-<number>-<worker>.<account>.workers.dev` without taking production traffic. The PR's "View deployment" button links there. Each push re-points the URL, and closing the PR releases it.
+
+The workflow reads two repository secrets, `CLOUDFLARE_ACCOUNT_ID` and `CLOUDFLARE_API_TOKEN`. The token is the "Edit Cloudflare Workers" template plus Account › Secrets Store › Edit, which Alchemy uses to reach its state store.
 
 To deploy by hand, put the same two variables in `.env` (gitignored), or run `pnpm alchemy profile edit` to log in with OAuth. Then run:
 
