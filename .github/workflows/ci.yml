@@ -16,8 +16,10 @@ on:
 permissions:
   contents: read
 
+# Key pull request runs by number: a merged PR's `closed` event reports
+# `github.ref` as the base branch, and must not cancel main's deploy.
 concurrency:
-  group: ci-${{ github.ref }}
+  group: ci-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 defaults:
